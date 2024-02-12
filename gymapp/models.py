@@ -1,6 +1,6 @@
 
 from django.db import models
-from django.contrib.auth.models import User
+
 from django.db.models.signals import *
 from django.dispatch import receiver
 
@@ -20,12 +20,14 @@ class User(AbstractUser):
 
     user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES, default=CUSTOMER)
 
+
+
     def __str__(self):
         return self.username
 
 
 class Trainer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='trainer')
     bio = models.TextField()
     expertise = models.CharField(max_length=100)
 
@@ -33,16 +35,19 @@ class Trainer(models.Model):
         return self.user.get_full_name()
 
 class Member(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='member')
     # Add any other fields specific to members
 
     def __str__(self):
         return self.user.get_full_name()
 
-@receiver(pre_save, sender=User)
-def user_pre_save_function(sender, instance,*args, **kwargs):
-    
-    pass
+@receiver(post_save, sender=User)
+def user_post_save_function(sender, instance, created, *args, **kwargs):
+     if created:
+        if instance.user_type == 'TR':
+            Trainer.objects.create(user=instance)
+        elif instance.user_type == 'ME':
+            Member.objects.create(user=instance)
 
 
 
