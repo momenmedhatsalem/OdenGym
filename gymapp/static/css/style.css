@@ -335,6 +335,8 @@ ol {
 
 .logo a {
 	display: inline-block;
+	width: 150px;
+	margin-left: 10%;
 }
 
 .nav-menu {
@@ -1141,6 +1143,7 @@ ol {
 
 .fs-about .fa-logo {
 	margin-bottom: 30px;
+	width: 100px;
 }
 
 .fs-about .fa-logo a {
@@ -2562,6 +2565,16 @@ ol {
 	background: #f36100;
 }
 
+.create-account button {
+	font-size: 14px;
+	color: black;
+	text-transform: uppercase;
+	font-weight: 700;
+	width: 100%;
+	border: none;
+	padding: 14px 0 12px;
+	background: lightblue;
+}
 /*---------------------
   Contact Section
 -----------------------*/

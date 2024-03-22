@@ -45,14 +45,36 @@ SITE_ID = 1
 
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
-    'gymapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites", 
+
+    # third-party
+    "allauth", 
+    "allauth.account",
+    'allauth.socialaccount',
+    'rest_framework',
+    'rest_framework.authtoken',
+    "dj_rest_auth", 
+
+    # local
+    'gymapp.apps.GymappConfig',
+    'apis.apps.ApisConfig',
 ]
+
+
+# django-allauth config
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+
+)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,21 +85,22 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'odengym.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],  # new
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
@@ -116,6 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "gymapp.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -140,3 +164,41 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# celery
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'update-membership-validity': {
+        'task': 'gymapp.tasks.update_membership_validity',
+        'schedule': crontab(minute=0, hour=0),  # Run the task every midnight
+    },
+
+}
+
+
+
+
+LOGIN_REDIRECT_URL = "home"
+
+LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_SESSION_REMEMBER = True 
+ACCOUNT_LOGIN_TEMPLATE = 'templates/account/login.html'
+ACCOUNT_USERNAME_REQUIRED = False # new
+ACCOUNT_AUTHENTICATION_METHOD = "email" # new
+ACCOUNT_EMAIL_REQUIRED = True # new
+ACCOUNT_UNIQUE_EMAIL = True #
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+    "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+    "rest_framework.authentication.SessionAuthentication",
+    "rest_framework.authentication.TokenAuthentication", # new
+    ],
+}
