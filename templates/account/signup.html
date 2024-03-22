@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    Create an Account
+{% endblock %}
+
+{% block body %}
+    <section class="contact-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-title contact-title">
+                        <span>Create an Account</span>
+                        <h2>Join OdenGym</h2>
+                    </div>
+                    <div class="contact-widget">
+                        <div class="cw-text">
+                            <i class="fa fa-map-marker"></i>
+                            <p>St In front of Saah Le Albak Cafe،, 88 Abbas El-Akkad, Al Manteqah Al Oula, Nasr City,<br/> Cairo Governorate 4450303</p>
+                        </div>
+                        <div class="cw-text">
+                            <i class="fa fa-mobile"></i>
+                            <ul>
+                                <li>0102089230</li>
+                            </ul>
+                        </div>
+                        <div class="cw-text email">
+                            <i class="fa fa-envelope"></i>
+                            <p>odengym2024@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="leave-comment">
+                        <form method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                            <input type="text" name="first_name" placeholder="First Name" required>
+                            <input type="text" name="last_name" placeholder="Last Name" required>
+                            <input type="email" name="email" placeholder="Email" required>
+                            <div class="password-container">
+                                <input type="password" name="password1" placeholder="Password" required>
+                                <span class="toggle-password" onclick="togglePasswordVisibility()">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <button type="submit">Create Account</button>
+                        </form>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <style>
+
+
+.password-container input[type="password"] {
+    padding-right: 30px; /* Adjust the padding to accommodate the eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    color: white;
+    top: 54%;
+    right: 25px; /* Adjust the position of the eye icon */
+    transform: translateY(-50%);
+    cursor: pointer;
+    
+}
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+
+    .toggle-password {
+        position: absolute;
+    color: white;
+    top: 70%;
+    right: 25px; /* Adjust the position of the eye icon */
+    transform: translateY(-50%);
+    cursor: pointer;
+    }
+}
+    </style>
+    <script>
+function togglePasswordVisibility() {
+    var passwordField = document.getElementById("password");
+    var togglePassword = document.querySelector(".toggle-password i");
+
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        togglePassword.classList.remove("fa-eye");
+        togglePassword.classList.add("fa-eye-slash");
+    } else {
+        passwordField.type = "password";
+        togglePassword.classList.remove("fa-eye-slash");
+        togglePassword.classList.add("fa-eye");
+    }
+}
+
+
+    </script>
+{% endblock %}

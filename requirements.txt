@@ -1,0 +1,4 @@
+markdown
+restframework
+django-filter
+dj-rest-auth

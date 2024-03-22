@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block body %}
+<section class="contact-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title contact-title">
+                    <h2>Your Profile</h2>
+                    <p>Welcome to your profile. Manage your personal information and preferences here.</p>
+                </div>
+            </div>
+            <div class="user-photo">
+                <!-- Add user photo here -->
+                <img src="{% static 'images/user_photo.jpg' %}" alt="User Photo">
+            </div>
+            <div class="col-lg-6">
+                <div class="leave-comment">
+                    <div class="profile-info">
+                        <h3>Profile Info</h3>
+                        <form action="#" id="profile-info-form">
+                            <!-- Input fields for profile info -->
+                            <div class="form-group">
+                                <label for="full-name">Full Name:</label>
+                                <input type="text" id="full-name" name="full_name" placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email">
+                            </div>
+                            <!-- Add more input fields as needed -->
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="additional-info">
+                        <h3>Additional Info</h3>
+                        <form action="#" id="additional-info-form">
+                            <!-- Input fields for additional info -->
+                            <div class="form-group">
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <!-- Add more input fields as needed -->
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="upload-photo">
+                        <h3>Upload Photo</h3>
+                        <form action="#" id="upload-photo-form">
+                            <!-- Input field for uploading photo -->
+                            <div class="form-group">
+                                <label for="photo">Select Photo:</label>
+                                <input type="file" id="photo" name="photo" accept="image/*">
+                            </div>
+                            <!-- Add more input fields as needed -->
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .leave-comment {
+    position: relative;
+}
+
+.user-photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -20px; /* Adjust the margin as needed */
+    margin-right: -20px; /* Adjust the margin as needed */
+}
+
+.user-photo img {
+    width: 50px; /* Adjust the width of the user photo */
+    height: 50px; /* Adjust the height of the user photo */
+    border-radius: 50%; /* To make the photo circular */
+}
+
+</style>
+{% endblock %}

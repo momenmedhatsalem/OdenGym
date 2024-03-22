@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+    <section class="contact-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-title contact-title">
+                        <h2>Login</h2>
+                        <span>Welcome Back!</span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="leave-comment">
+                        <form method="post" action="{% url 'account_login' %}">
+                            {% csrf_token %}
+                            <input type="email" name="login" placeholder="Email" required>
+                            <input type="password" name="password" placeholder="Password" required>
+                            <button type="submit">Login</button>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="create-account">
+                        <button>Create an Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <style>
+        .password-container input[type="password"] {
+            padding-right: 30px; /* Adjust the padding to accommodate the eye icon */
+        }
+
+        .toggle-password {
+            position: absolute;
+            color: white;
+            top: 54%;
+            right: 25px; /* Adjust the position of the eye icon */
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            .toggle-password {
+                position: absolute;
+                color: white;
+                top: 70%;
+                right: 25px; /* Adjust the position of the eye icon */
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+        }
+    </style>
+
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("password");
+            var togglePassword = document.querySelector(".toggle-password i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                togglePassword.classList.remove("fa-eye");
+                togglePassword.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                togglePassword.classList.remove("fa-eye-slash");
+                togglePassword.classList.add("fa-eye");
+            }
+        }
+    </script>
+{% endblock %}
